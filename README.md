@@ -5,7 +5,7 @@
 
   Visual image-to-story generation, multimodal AI analysis, glassmorphic web dashboard, and interactive reading studio.
 
-  **[Live App](https://github.com/musama0065/pixeltale)** · Next.js 15 + React 19 + TypeScript · Deployed on Vercel
+  **[Live App](https://pixeltale.vercel.app/)** · Next.js 15 + React 19 + TypeScript · Deployed on Vercel
 </div>
 
 ---
@@ -66,7 +66,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/musama0065/pixeltale.git
+git clone https://github.com/musama-dev/pixeltale.git
 cd "AI story teller/frontend"
 
 # Install Node dependencies

@@ -1,58 +1,121 @@
-# PixelTale — AI-Powered Image-to-Story Generator
+<div align="center">
+  <img src="images/logo.png" alt="PixelTale Logo" width="340" />
 
-PixelTale is a modern, premium web application that transforms user-uploaded images into beautiful, personalized short stories.
+  ### Transform Your Images Into Immersive AI-Powered Stories. Synthesized by AI in Seconds.
 
-A user uploads an image, previews it instantly, chooses a storytelling style, and receives a unique AI-written narrative inspired by the scene, colors, atmosphere, and objects detected within the image.
+  Visual image-to-story generation, multimodal AI analysis, glassmorphic web dashboard, and interactive reading studio.
 
-## 🚀 Key Features
+  **[Live App](https://github.com/musama0065/pixeltale)** · Next.js 15 + React 19 + TypeScript · Deployed on Vercel
+</div>
 
-- **Cozy Premium UI**: Built with a custom Tailwind CSS v4 design system featuring a warm coral and soft amber color palette, elegant typography (Inter and Merriweather), custom scrollbars, glassmorphism, and spring-based Framer Motion card animations.
-- **Client-Side Image Compression**: High-resolution user images (up to 8MB) are automatically resized to a maximum dimension of 1200px and compressed to lightweight WebPs/JPEGs before upload. This ensures fast uploads, preserves Vercel payload limits, and reduces token consumption.
-- **Gemini 2.5 Flash Integration**: Secure, server-side API communication using the official `@google/genai` SDK.
-- **Structured JSON Outputs**: Employs OpenAPI schemas directly on the Gemini API configuration to guarantee valid JSON formatting consisting of a title, story content, and exactly three mood tags.
-- **Storybook-Style Formatting**: The generated story displays inside a modern paper book-style card, featuring a classic serif typeface, responsive line heights, and an elegant stylized **Drop Cap** (first-letter decoration).
-- **Interactive UX Polish**:
-  - Rotating status messages (e.g. *Looking closely...*, *Adding a little magic...*) cycle every 2.5 seconds to keep the user engaged.
-  - Confetti explosion upon successful story generation.
-  - One-click copy-to-clipboard button with visual feedback.
-  - Client-side session history keeping track of the last 10 generated stories.
+---
 
-## 🛠 Tech Stack
+## 🌟 What it Does
 
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **Animation**: Framer Motion
-- **File Upload**: React Dropzone
-- **AI Model**: Google Gemini 2.5 Flash Vision (via `@google/genai`)
+**PixelTale** is your intelligent visual storytelling assistant. It automatically analyzes uploaded photos, digital art, or illustrations, extracts visual context (objects, mood, lighting, characters, and scene dynamics), and transforms raw images into clean, immersive, and digestible narrative briefings.
 
-## ⚙️ Installation & Setup
+- 🎨 **Multimodal Vision Analysis** — Analyzes uploaded images to detect fine details, emotions, and atmosphere using Gemini Vision models.
+- 🎭 **6+ Curated Story Styles** — Whimsical, Sci-Fi, Mystery, Cyberpunk, Fantasy, and Film Noir.
+- ⏱️ **Dynamic Reading Analytics** — Crisp story breakdown with estimated reading time, word count, and narrative complexity.
+- 🖼️ **Smart Client-Side Canvas Compression** — Pre-compresses large image files on the client before dispatching to prevent payload timeouts.
+- 💾 **Local Session History** — Automatically saves, organizes, and lets you revisit past stories directly in your browser.
+- 🌓 **Glassmorphic Interactive Dashboard** — Smooth Framer Motion animations, theme controls, genre selector, confetti delighters, and markdown export.
+- ⚡ **High-Performance Caching** — Intelligent in-memory caching for API responses to ensure sub-second response times for repeat visits.
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/pixeltale.git
-   cd pixeltale
-   ```
+---
 
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+## 🏗️ Architecture
 
-3. **Configure Environment Variables**:
-   Create a `.env.local` file in the root directory and insert your Gemini API Key:
-   ```env
-   GEMINI_API_KEY=your_google_gemini_api_key_here
-   GEMINI_MODEL=gemini-2.5-flash
-   ```
+![Architecture Diagram](images/architecture.png)
 
-4. **Run the Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) to view the application.
+---
 
-5. **Build for Production**:
-   ```bash
-   npm run build
-   ```
+## 🛠️ Tech Stack
+
+| Layer | Tech |
+| :--- | :--- |
+| **Frontend UI** | Next.js 15 (App Router), React 19, TypeScript, Lucide React, Framer Motion, Custom Glassmorphic CSS Engine |
+| **Backend API** | Next.js Serverless API (`/api/generate-story`), Node.js 20+ |
+| **AI Synthesis** | Google GenAI SDK (`@google/genai`), Gemini 2.5 Flash / Gemini 3.6 Flash |
+| **File Handling** | `react-dropzone` with client-side HTML5 Canvas compressor |
+| **Deployment** | Vercel (Web Application) |
+
+---
+
+## ⚡ Engineering Problems Solved
+
+| Problem | Root Cause | Fix |
+| :--- | :--- | :--- |
+| **Vercel Body Payload Limit (413)** | Uploading high-res raw camera images (10MB+) exceeded Vercel serverless request body size limits. | Implemented client-side HTML5 Canvas compression before API request, scaling images down to optimal dimensions under 1MB. |
+| **Hanging API Requests** | Unresponsive AI model socket connections held network threads open. | Configured strict `maxDuration = 60` export in Next.js route handlers with explicit timeout signals. |
+| **Missing Image Thumbnails / Preview Fills** | Dynamic canvas rendering sometimes broke aspect ratios on custom uploads. | Built an aspect-ratio aware image util with object-fit container fallbacks. |
+| **Gemini Output JSON Formatting Errors** | AI model occasionally returned raw text or unformatted markdown code fences around JSON outputs. | Enforced strict persona prompts specifying JSON schema coupled with regex extraction fallback before parsing. |
+| **Stale / Duplicate Session History** | Multiple uploads of identical images overwrote previous session outputs. | Implemented unique hash-based UUID keying per generated story session in LocalStorage. |
+
+---
+
+## 🚀 Run It Locally
+
+### Prerequisites
+- **Node.js**: v20 or higher
+- **Google Gemini API Key**: Get one for free from [Google AI Studio](https://aistudio.google.com/)
+
+---
+
+### 1. Web Application (`frontend`)
+
+```bash
+# Clone the repository
+git clone https://github.com/musama0065/pixeltale.git
+cd "AI story teller/frontend"
+
+# Install Node dependencies
+npm install
+
+# Create environment file
+# Add your GEMINI_API_KEY to frontend/.env.local
+
+# Start development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the interactive web dashboard.
+
+---
+
+## ⚙️ Environment Variables
+
+### Web App (`frontend/.env.local`)
+
+| Variable | Required | Description |
+| :--- | :---: | :--- |
+| `GEMINI_API_KEY` | **Yes** | Your Google Gemini AI Studio API key. |
+
+---
+
+## 📡 API Overview
+
+| Method & Endpoint | Parameters | Purpose |
+| :--- | :--- | :--- |
+| `POST /api/generate-story` | `{ image, mimeType, genre }` | Accepts base64 image and genre, returns AI-synthesized narrative story JSON. |
+
+---
+
+## 🌐 Deployment Notes
+
+- **Vercel (Web Dashboard)**: Connect your GitHub repository to Vercel. Set Root Directory to `frontend` and add `GEMINI_API_KEY` under Environment Variables.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] 🎙️ **Voice / Audio Story (Text-to-Speech)** — Generate 3-minute morning audio podcasts using Google TTS or ElevenLabs.
+- [ ] 📖 **Illustrated PDF Export** — Export generated stories into printable multi-page digital storybooks.
+- [ ] 💬 **WhatsApp & Telegram Story Bots** — Push instant visual stories directly to messaging apps.
+- [ ] 🎯 **Personalized Scene Editor** — Customize story prompts, character details, and muted themes.
+
+---
+
+<div align="center">
+  Built by <b>Muhammad Usama</b>
+</div>
